@@ -1,23 +1,49 @@
-import numpy as np
 import cv2
 
-# Gets access to computers webcam
-camera = cv2.VideoCapture(0)
 
-while True:
-    ret, frame = camera.read()
-    if not ret:
-        print("Error reading frame.")
-        break
-    # Black and white frame
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    cv2.imshow("frame", frame)  # Display color frame
-    cv2.imshow("frame_gray", gray)  # Display black and white frame
+def display_video_color(refresh_rate_ms):
+    # Gets access to computers webcam
+    cam = cv2.VideoCapture(0)
 
-    # 1 ms between frames, enter q on keyboard to exit
-    if cv2.waitKey(1) == ord('q'):
-        break
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("Error reading frame.")
+            break
 
-# Shut down camera, close gui
-camera.release()
-cv2.destroyAllWindows()
+        cv2.imshow("frame", frame)  # Display color frame
+
+        # 1 ms between frames, enter q on keyboard to exit
+        if cv2.waitKey(refresh_rate_ms) == ord('q'):
+            break
+
+    # Shut down camera, close gui
+    cam.release()
+    cv2.destroyAllWindows()
+
+
+def display_video_gray(refresh_rate_ms):
+    # Gets access to computers webcam
+    cam = cv2.VideoCapture(0)
+
+    while True:
+        ret, frame = cam.read()
+        if not ret:
+            print("Error reading frame.")
+            break
+
+        # Black and white frame
+        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+        cv2.imshow("frame_gray", gray)  # Display black and white frame
+
+        # 1 ms between frames, enter q on keyboard to exit
+        if cv2.waitKey(refresh_rate_ms) == ord('q'):
+            break
+
+    # Shut down camera, close gui
+    cam.release()
+    cv2.destroyAllWindows()
+
+
+display_video_color(1)  # 1000 fps
+display_video_gray(100)  # 10 fps
